@@ -18,20 +18,20 @@ pipeline {
         //     }
         // }
 
-        // stage('Build and push image') {
-        //     steps {
-        //         withDockerRegistry(credentialsId: 'hanh2002', url: 'https://index.docker.io/v1/') {
-        //             sh 'docker build -t hanh2002/hello-world:v1 .'
-        //             sh 'docker push hanh2002/hello-world:v1'
-        //         }
-        //     }
-        // }
-
-        stage('Deploy') {
+        stage('Build and push image') {
             steps {
-                sh "echo 12345"
+                withDockerRegistry(credentialsId: 'hanh2002', url: 'https://index.docker.io/v1/') {
+                    sh 'docker build -t hanh2002/helloworld:v1 .'
+                    sh 'docker push hanh2002/helloworld:v1'
+                }
             }
         }
+
+        // stage('Deploy') {
+        //     steps {
+        //         sh "echo 12345"
+        //     }
+        // }
 
 
         // stage('Deploy') {
