@@ -34,13 +34,19 @@ pipeline {
         // }
 
 
-        // stage('Deploy') {
-        //     steps {
-        //         sshagent(['ec2']) {
-        //             sh "ssh -tt ec2-user@3.95.167.105 'echo 12345;whoami;ls -la'"
-        //         }
-        //     }
-        // }
+        stage('Deploy') {
+            steps {
+                sshagent(['ec2']) {
+                    sh "
+                    ssh -tt ec2-user@44.202.131.42
+                    'docker pull hanh2002/helloworld:v1;
+                    docker container stop nodejs-hello-world;
+                    echo y | docker container prune;
+                    docker container run -d --rm --name nodejs-hello-world -p 3000:3000 hanh2002/helloworld:v1'
+                    "
+                }
+            }
+        }
     }
     
     post {
